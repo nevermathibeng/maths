@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mr. Mathibeng — Mathematics · Gauteng 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0d0d0d;
+  --white: #f8f6f1;
+  --cream: #ede9e0;
+  --green: #1a3d2b;
+  --green2: #2a5c40;
+  --green3: #3d7a58;
+  --gold: #c8a84b;
+  --gold2: #e2c070;
+  --muted: #7a7568;
+  --border: rgba(26,61,43,0.15);
+  --shadow: rgba(13,13,13,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(248,246,241,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--green);
+  letter-spacing: 0.3px;
+}
+
+.nav-brand span {
+  font-weight: 300;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--green); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--green);
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  padding-bottom: 80px;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(61,122,88,0.4) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at 20% 80%, rgba(200,168,75,0.12) 0%, transparent 50%);
+}
+
+/* Math symbols floating in background */
+.hero-math {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.math-sym {
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
+  color: rgba(255,255,255,0.04);
+  font-size: 120px;
+  font-weight: 300;
+  user-select: none;
+  animation: floatSym 20s ease-in-out infinite;
+}
+
+.math-sym:nth-child(1) { top: 5%; left: 5%; font-size: 180px; animation-delay: 0s; }
+.math-sym:nth-child(2) { top: 20%; right: 8%; font-size: 140px; animation-delay: -5s; }
+.math-sym:nth-child(3) { top: 50%; left: 15%; font-size: 100px; animation-delay: -10s; }
+.math-sym:nth-child(4) { bottom: 20%; right: 20%; font-size: 160px; animation-delay: -3s; }
+.math-sym:nth-child(5) { top: 35%; left: 40%; font-size: 80px; animation-delay: -8s; }
+.math-sym:nth-child(6) { bottom: 30%; left: 5%; font-size: 120px; animation-delay: -12s; }
+
+@keyframes floatSym {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-20px) rotate(2deg); }
+  66% { transform: translateY(10px) rotate(-1deg); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 80px;
+  max-width: 1100px;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(56px, 8vw, 100px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 0.95;
+  letter-spacing: -1px;
+  margin-bottom: 32px;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold2);
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: rgba(248,246,241,0.6);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-hero {
+  padding: 14px 32px;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-hero-primary {
+  background: var(--gold);
+  color: var(--green);
+}
+.btn-hero-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+
+.btn-hero-ghost {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+.btn-hero-ghost:hover { border-color: rgba(255,255,255,0.6); transform: translateY(-2px); }
+
+.hero-stats {
+  position: absolute;
+  right: 80px;
+  bottom: 80px;
+  display: flex;
+  gap: 48px;
+}
+
+.hero-stat {
+  text-align: right;
+}
+
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1;
+}
+
+.hero-stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(248,246,241,0.4);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── ANNOUNCEMENT TICKER ── */
+.ticker {
+  background: var(--gold);
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-inner {
+  display: inline-flex;
+  animation: tickerScroll 35s linear infinite;
+  gap: 0;
+}
+
+.ticker-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--green);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ticker-item::after {
+  content: '◆';
+  font-size: 8px;
+  opacity: 0.5;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── SECTION BASE ── */
+section {
+  padding: 100px 80px;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 300;
+  color: var(--green);
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  margin-bottom: 20px;
+}
+
+/* ── ABOUT ── */
+.about {
+  background: var(--white);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-image {
+  position: relative;
+}
+
+.about-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--green);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.about-photo-inner {
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(135deg, var(--green2) 0%, var(--green) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px;
+  color: rgba(255,255,255,0.08);
+}
+
+.about-photo-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(13,13,13,0.7));
+  padding: 32px;
+}
+
+.about-photo-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--white);
+}
+
+.about-photo-role {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.about-accent {
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 120px; height: 120px;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  z-index: -1;
+}
+
+.about-body p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.about-body p strong {
+  color: var(--black);
+  font-weight: 500;
+}
+
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.about-tag {
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.5px;
+}
+
+/* ── GRADES ── */
+.grades-section {
+  background: var(--cream);
+}
+
+.grades-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 60px;
+}
+
+.grade-card {
+  background: var(--white);
+  padding: 48px 40px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.grade-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+
+.grade-card:hover { background: var(--green); }
+.grade-card:hover::before { transform: scaleX(1); }
+
+.grade-card:hover .grade-number,
+.grade-card:hover .grade-title,
+.grade-card:hover .grade-topics li,
+.grade-card:hover .grade-assessments { color: var(--white); }
+
+.grade-card:hover .grade-topics li::before { background: var(--gold); }
+
+.grade-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 16px;
+  transition: color 0.3s;
+}
+
+.grade-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--green);
+  margin-bottom: 24px;
+  transition: color 0.3s;
+}
+
+.grade-topics {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.grade-topics li {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.3s;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.grade-card:hover .grade-topics li { border-bottom-color: rgba(255,255,255,0.08); }
+
+.grade-topics li::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+
+.grade-assessments {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+/* ── ASSESSMENTS TIMELINE ── */
+.timeline-section { background: var(--white); }
+
+.timeline {
+  margin-top: 60px;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 120px;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 40px;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.timeline-item + .timeline-item { border-top: 1px solid var(--border); }
+
+.timeline-date {
+  padding: 28px 0;
+  text-align: right;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.timeline-date::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 9px; height: 9px;
+  background: var(--white);
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.timeline-content {
+  padding: 28px 0 28px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.timeline-task {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.timeline-meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.timeline-badges {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 2px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.badge-green { background: rgba(26,61,43,0.08); color: var(--green); }
+.badge-gold { background: rgba(200,168,75,0.15); color: #8a6f1a; }
+.badge-done { background: rgba(26,61,43,0.06); color: var(--muted); text-decoration: line-through; }
+.badge-upcoming { background: rgba(200,168,75,0.12); color: #8a6f1a; }
+
+/* ── RESOURCES ── */
+.resources-section { background: var(--green); }
+
+.resources-section .section-title { color: var(--white); }
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  margin-top: 60px;
+}
+
+.resource-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 40px 32px;
+  text-decoration: none;
+  display: block;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.resource-card::after {
+  content: '→';
+  position: absolute;
+  top: 24px; right: 24px;
+  font-size: 18px;
+  color: rgba(255,255,255,0.2);
+  transition: all 0.25s;
+}
+
+.resource-card:hover {
+  background: rgba(200,168,75,0.12);
+  border-color: rgba(200,168,75,0.3);
+  transform: translateY(-4px);
+}
+
+.resource-card:hover::after {
+  color: var(--gold);
+  right: 20px;
+}
+
+.resource-icon {
+  font-size: 32px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.resource-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.resource-desc {
+  font-size: 13px;
+  color: rgba(248,246,241,0.45);
+  line-height: 1.6;
+}
+
+/* ── ATP TRACKER ── */
+.atp-section { background: var(--cream); }
+
+.atp-bar-wrap {
+  margin-top: 60px;
+  background: var(--white);
+  border-radius: 2px;
+  padding: 40px;
+  border: 1px solid var(--border);
+}
+
+.atp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.atp-grade-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.atp-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 32px;
+  color: var(--green);
+}
+
+.atp-bar {
+  height: 6px;
+  background: var(--cream);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.atp-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--green), var(--green3));
+  transition: width 1s ease;
+}
+
+.atp-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 32px;
+}
+
+.atp-weeks {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  gap: 4px;
+}
+
+.atp-week-pip {
+  height: 40px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  cursor: default;
+  transition: transform 0.15s;
+  position: relative;
+}
+
+.atp-week-pip:hover { transform: translateY(-3px); }
+
+.atp-week-pip.done { background: var(--green); color: rgba(255,255,255,0.7); }
+.atp-week-pip.current { background: var(--gold); color: var(--green); font-weight: 600; }
+.atp-week-pip.upcoming { background: var(--white); color: var(--muted); border: 1px solid var(--border); }
+
+.atp-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--black);
+  color: var(--white);
+  padding: 6px 10px;
+  border-radius: 2px;
+  font-size: 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+
+.atp-week-pip:hover .atp-tooltip { opacity: 1; }
+
+/* ── CONTACT ── */
+.contact-section {
+  background: var(--white);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.contact-info { padding-top: 20px; }
+
+.contact-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-icon {
+  width: 40px; height: 40px;
+  background: var(--cream);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.contact-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.contact-value {
+  font-size: 15px;
+  color: var(--black);
+  font-weight: 500;
+}
+
+.contact-form-wrap {
+  background: var(--cream);
+  padding: 40px;
+  border-radius: 2px;
+}
+
+.contact-form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--green);
+  margin-bottom: 24px;
+}
+
+.form-group { margin-bottom: 16px; }
+
+.form-label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus { border-color: var(--green); }
+textarea.form-input { min-height: 100px; resize: vertical; }
+
+.form-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 2px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.form-btn:hover { background: var(--green2); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  padding: 40px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: rgba(248,246,241,0.5);
+}
+
+.footer-brand strong { color: var(--white); font-weight: 600; }
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 12px;
+  color: rgba(248,246,241,0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--gold); }
+
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(248,246,241,0.25);
+  letter-spacing: 1px;
+}
+
+/* ── ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--white); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 24px; }
+  section { padding: 60px 24px; }
+  .hero-content { padding: 0 24px; }
+  .hero-stats { right: 24px; gap: 24px; }
+  .about, .contact-section { grid-template-columns: 1fr; gap: 40px; }
+  .grades-grid { grid-template-columns: 1fr; }
+  .resources-grid { grid-template-columns: 1fr 1fr; }
+  .atp-weeks { grid-template-columns: repeat(6, 1fr); }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Mr. Mathibeng <span>· Mathematics</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#grades">Grades</a></li>
+    <li><a href="#assessments">Assessments</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#atp">ATP</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-math">
+    <div class="math-sym">∑</div>
+    <div class="math-sym">π</div>
+    <div class="math-sym">∫</div>
+    <div class="math-sym">√</div>
+    <div class="math-sym">∞</div>
+    <div class="math-sym">Δ</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Gauteng Province · Tshwane West District · 2026 Academic Year</div>
+    <h1 class="hero-title">
+      Mathematics<br>
+      <em>Unlocked.</em>
+    </h1>
+    <p class="hero-sub">
+      Welcome to Mr. Mathibeng's Mathematics hub. Find your class resources, upcoming assessments, study materials, and weekly topic updates — all in one place.
+    </p>
+    <div class="hero-actions">
+      <a href="#grades" class="btn-hero btn-hero-primary">📚 My Grades</a>
+      <a href="#resources" class="btn-hero btn-hero-ghost">🔗 Resources</a>
+      <a href="#contact" class="btn-hero btn-hero-ghost">✉ Ask a Question</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">168</div>
+      <div class="hero-stat-label">Learners</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">5</div>
+      <div class="hero-stat-label">Grade Levels</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">7</div>
+      <div class="hero-stat-label">SBA Tasks</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker-inner"></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-image reveal">
+    <div class="about-photo">
+      <div class="about-photo-inner">∑</div>
+      <div class="about-photo-overlay">
+        <div class="about-photo-name">Mr. Mathibeng</div>
+        <div class="about-photo-role">Mathematics Educator · Gauteng · Tshwane West</div>
+      </div>
+    </div>
+    <div class="about-accent"></div>
+  </div>
+  <div class="about-body reveal">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">Building confidence,<br><em>one concept at a time.</em></h2>
+    <p>I am a <strong>Mathematics teacher specialising in Grades 8–12</strong>, following the CAPS curriculum in Gauteng. My focus is on building a strong foundation in mathematical concepts while helping learners develop confidence in problem-solving.</p>
+    <p>I aim to make Mathematics <strong>clear, structured, and accessible to all learners</strong> by breaking down complex topics into simple, understandable steps. This website is designed to support learners with lessons, practice exercises, and revision materials that can be accessed anytime.</p>
+    <p>I am committed to creating a supportive learning environment where every learner has the opportunity to improve and succeed in Mathematics. My door and inbox are always open — don't wait until the test to ask for help.</p>
+    <div class="about-tags">
+      <span class="about-tag">Grades 8–12 Mathematics</span>
+      <span class="about-tag">CAPS Curriculum</span>
+      <span class="about-tag">Gauteng Province</span>
+      <span class="about-tag">Tshwane West District</span>
+      <span class="about-tag">NSC 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- GRADES -->
+<section class="grades-section" id="grades">
+  <div class="section-label reveal">Class Hubs</div>
+  <h2 class="section-title reveal">Choose Your Grade</h2>
+  <p class="reveal" style="color:var(--muted);font-size:15px;max-width:500px;line-height:1.7;margin-bottom:0">Find your notes, past papers, current topic and upcoming assessments. All grades follow the CAPS curriculum.</p>
+
+  <div class="grades-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="grade-card reveal">
+      <div class="grade-number">10</div>
+      <div class="grade-title">Grade 10 Mathematics</div>
+      <ul class="grade-topics">
+        <li>Algebraic Expressions & Exponents</li>
+        <li>Equations & Inequalities</li>
+        <li>Trigonometry (Ratios & Functions)</li>
+        <li>Euclidean Geometry</li>
+        <li>Analytical Geometry</li>
+        <li>Functions & Graphs</li>
+        <li>Statistics & Probability</li>
+      </ul>
+      <div class="grade-assessments">7 SBA Tasks · CAPS · Full Year</div>
+    </div>
+
+    <div class="grade-card reveal">
+      <div class="grade-number">11</div>
+      <div class="grade-title">Grade 11 Mathematics</div>
+      <ul class="grade-topics">
+        <li>Exponents, Surds & Equations</li>
+        <li>Nature of Roots</li>
+        <li>Trigonometry & Identities</li>
+        <li>Analytical & Euclidean Geometry</li>
+        <li>Functions & Graphs</li>
+        <li>Statistics & Probability</li>
+        <li>Finance, Growth & Decay</li>
+      </ul>
+      <div class="grade-assessments">3 Groups · Key 1, Key 5, Key 6</div>
+    </div>
+
+    <div class="grade-card reveal">
+      <div class="grade-number">12</div>
+      <div class="grade-title">Grade 12 Mathematics</div>
+      <ul class="grade-topics">
+        <li>Sequences & Series</li>
+        <li>Functions & Inverses</li>
+        <li>Differential Calculus</li>
+        <li>Analytical Geometry</li>
+        <li>Trigonometry (Compound Angles)</li>
+        <li>Statistics & Probability</li>
+        <li>Financial Mathematics</li>
+      </ul>
+      <div class="grade-assessments">Informals & Formals · NSC 2026</div>
+    </div>
+  </div>
+
+  <!-- Grade 8 & 9 row -->
+  <div class="grades-grid" style="grid-template-columns:1fr 1fr;margin-top:2px">
+    <div class="grade-card reveal">
+      <div class="grade-number">8</div>
+      <div class="grade-title">Grade 8 Mathematics</div>
+      <ul class="grade-topics">
+        <li>Whole Numbers & Integers</li>
+        <li>Fractions, Decimals & Percentages</li>
+        <li>Algebra & Algebraic Expressions</li>
+        <li>Geometry of Shapes & Lines</li>
+        <li>Measurement & Data Handling</li>
+      </ul>
+      <div class="grade-assessments">CAPS · Foundation Year</div>
+    </div>
+
+    <div class="grade-card reveal">
+      <div class="grade-number">9</div>
+      <div class="grade-title">Grade 9 Mathematics</div>
+      <ul class="grade-topics">
+        <li>Numbers, Integers & Exponents</li>
+        <li>Algebraic Expressions & Equations</li>
+        <li>Geometry of 2D & 3D Shapes</li>
+        <li>Transformation Geometry</li>
+        <li>Data Handling & Probability</li>
+      </ul>
+      <div class="grade-assessments">CAPS · Senior Phase</div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSESSMENTS TIMELINE -->
+<section class="timeline-section" id="assessments">
+  <div class="section-label reveal">Programme of Assessment</div>
+  <h2 class="section-title reveal">2026 Assessment<br><em>Calendar</em></h2>
+
+  <div class="timeline reveal">
+
+    <div class="timeline-item">
+      <div class="timeline-date">Jan 26–30</div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-task">Investigation — All Grades</div>
+          <div class="timeline-meta">Gr 10: Inequalities · Gr 11: SBA Task 1 · Gr 12: Inverse Functions</div>
+        </div>
+        <div class="timeline-badges">
+          <span class="badge badge-done">Done</span>
+          <span class="badge badge-green">15%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Mar 19–24</div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-task">Test 1 — All Grades</div>
+          <div class="timeline-meta">Gr 10: 20 Mar · Gr 11: 24 Mar · Gr 12: 19 Mar</div>
+        </div>
+        <div class="timeline-badges">
+          <span class="badge badge-done">Done</span>
+          <span class="badge badge-green">14–15%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Apr 30 – May 6</div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-task">Assignment — All Grades</div>
+          <div class="timeline-meta">Gr 10: 5 May · Gr 11: 6 May · Gr 12: 30 Apr</div>
+        </div>
+        <div class="timeline-badges">
+          <span class="badge badge-upcoming">Upcoming</span>
+          <span class="badge badge-gold">15%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Jun – Jul</div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-task">June Examination — All Grades</div>
+          <div class="timeline-meta">As per official June Exam timetable · School closes 26 June</div>
+        </div>
+        <div class="timeline-badges">
+          <span class="badge badge-upcoming">Upcoming</span>
+          <span class="badge badge-gold">14–15%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Aug 13–19</div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-task">Test 2 — All Grades</div>
+          <div class="timeline-meta">Gr 10: 18 Aug · Gr 11: 19 Aug · Gr 12: 13 Aug</div>
+        </div>
+        <div class="timeline-badges">
+          <span class="badge badge-upcoming">Upcoming</span>
+          <span class="badge badge-green">14–15%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Sep</div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-task">Test 3 — Grade 10 & 11</div>
+          <div class="timeline-meta">Gr 10: 15 Sep · Gr 11: 16 Sep</div>
+        </div>
+        <div class="timeline-badges">
+          <span class="badge badge-upcoming">Upcoming</span>
+          <span class="badge badge-green">14%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Sep–Oct</div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-task">Preparatory Examination — Grade 12</div>
+          <div class="timeline-meta">As per Prep Exam timetable · School closes 23 Sep</div>
+        </div>
+        <div class="timeline-badges">
+          <span class="badge badge-upcoming">Upcoming</span>
+          <span class="badge badge-gold">25%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Nov–Dec</div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-task">Final Examinations — All Grades</div>
+          <div class="timeline-meta">NSC Final · School closes 11 Dec 2026</div>
+        </div>
+        <div class="timeline-badges">
+          <span class="badge badge-upcoming">Final</span>
+          <span class="badge badge-gold">60%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="resources-section" id="resources">
+  <div class="section-label reveal" style="color:rgba(200,168,75,0.7)">Materials</div>
+  <h2 class="section-title reveal">Everything You Need<br><em>in One Place</em></h2>
+
+  <div class="resources-grid">
+    <a href="#" class="resource-card reveal">
+      <span class="resource-icon">📊</span>
+      <div class="resource-title">Grade 12 Marksheet</div>
+      <div class="resource-desc">Live mark tracking for Informals and Formals groups. Term 1 results included.</div>
+    </a>
+    <a href="#" class="resource-card reveal">
+      <span class="resource-icon">📋</span>
+      <div class="resource-title">Grade 11 Marksheet</div>
+      <div class="resource-desc">Key 1, Key 5 and Key 6 groups. Investigation and Test 1 marks captured.</div>
+    </a>
+    <a href="#" class="resource-card reveal">
+      <span class="resource-icon">📐</span>
+      <div class="resource-title">ClassDesk Admin</div>
+      <div class="resource-desc">Teacher dashboard — attendance, marks, ATP tracker and assessment countdown.</div>
+    </a>
+    <a href="#" class="resource-card reveal">
+      <span class="resource-icon">📁</span>
+      <div class="resource-title">Past Papers & Memos</div>
+      <div class="resource-desc">Grade 10–12 past papers, June exams and NSC papers with marking guidelines.</div>
+    </a>
+    <a href="#" class="resource-card reveal">
+      <span class="resource-icon">📝</span>
+      <div class="resource-title">Formula Sheets</div>
+      <div class="resource-desc">Official NSC formula sheets for Grades 10–12. Print-ready PDF.</div>
+    </a>
+    <a href="#" class="resource-card reveal">
+      <span class="resource-icon">🎬</span>
+      <div class="resource-title">Video Lessons</div>
+      <div class="resource-desc">Curated YouTube playlist per topic and grade. Khan Academy + local channels.</div>
+    </a>
+    <a href="#" class="resource-card reveal">
+      <span class="resource-icon">📖</span>
+      <div class="resource-title">Study Notes</div>
+      <div class="resource-desc">Chapter summaries, worked examples and practice exercises per topic.</div>
+    </a>
+    <a href="#" class="resource-card reveal">
+      <span class="resource-icon">🗓</span>
+      <div class="resource-title">Annual Teaching Plan</div>
+      <div class="resource-desc">Full ATP for Grades 10, 11 and 12 — Gauteng Province 2026.</div>
+    </a>
+  </div>
+</section>
+
+<!-- ATP TRACKER -->
+<section class="atp-section" id="atp">
+  <div class="section-label reveal">Curriculum Progress</div>
+  <h2 class="section-title reveal">Where Are We<br><em>Right Now?</em></h2>
+  <p class="reveal" style="color:var(--muted);font-size:15px;max-width:500px;line-height:1.7;margin-top:0;margin-bottom:48px">
+    Updated weekly. Each block represents one teaching week of Term 1. Hover for the topic.
+  </p>
+
+  <!-- Grade 12 ATP -->
+  <div class="atp-bar-wrap reveal" style="margin-bottom:16px">
+    <div class="atp-header">
+      <div class="atp-grade-label">Grade 12 — Term 1</div>
+      <div class="atp-pct">72%</div>
+    </div>
+    <div class="atp-bar"><div class="atp-fill" style="width:72%"></div></div>
+    <div class="atp-labels"><span>14 Jan</span><span>27 Mar</span></div>
+    <div class="atp-weeks">
+      <div class="atp-week-pip done">W1<div class="atp-tooltip">Sequences & Series</div></div>
+      <div class="atp-week-pip done">W2<div class="atp-tooltip">Sequences cont.</div></div>
+      <div class="atp-week-pip done">W3<div class="atp-tooltip">Functions & Inverses</div></div>
+      <div class="atp-week-pip done">W4<div class="atp-tooltip">Exponential & Log</div></div>
+      <div class="atp-week-pip done">W5<div class="atp-tooltip">Log Equations</div></div>
+      <div class="atp-week-pip done">W6<div class="atp-tooltip">Trig: Compound Angles</div></div>
+      <div class="atp-week-pip done">W7<div class="atp-tooltip">Trig: Double Angles</div></div>
+      <div class="atp-week-pip done">W8<div class="atp-tooltip">Trig Problems</div></div>
+      <div class="atp-week-pip current">W9<div class="atp-tooltip">Polynomial Functions ◀ Now</div></div>
+      <div class="atp-week-pip upcoming">W10<div class="atp-tooltip">Differential Calculus</div></div>
+      <div class="atp-week-pip upcoming">W11<div class="atp-tooltip">Calculus Applications</div></div>
+    </div>
+  </div>
+
+  <!-- Grade 11 ATP -->
+  <div class="atp-bar-wrap reveal" style="margin-bottom:16px">
+    <div class="atp-header">
+      <div class="atp-grade-label">Grade 11 — Term 1</div>
+      <div class="atp-pct">24%</div>
+    </div>
+    <div class="atp-bar"><div class="atp-fill" style="width:24%"></div></div>
+    <div class="atp-labels"><span>14 Jan</span><span>27 Mar</span></div>
+    <div class="atp-weeks">
+      <div class="atp-week-pip done">W1<div class="atp-tooltip">Exponents & Surds</div></div>
+      <div class="atp-week-pip done">W2<div class="atp-tooltip">Quadratic Equations</div></div>
+      <div class="atp-week-pip current">W3<div class="atp-tooltip">Inequalities ◀ Now</div></div>
+      <div class="atp-week-pip upcoming">W4<div class="atp-tooltip">Equations (2 unknowns)</div></div>
+      <div class="atp-week-pip upcoming">W5<div class="atp-tooltip">Nature of Roots</div></div>
+      <div class="atp-week-pip upcoming">W6<div class="atp-tooltip">Trigonometry</div></div>
+      <div class="atp-week-pip upcoming">W7<div class="atp-tooltip">Reduction Formulae</div></div>
+      <div class="atp-week-pip upcoming">W8<div class="atp-tooltip">Trig Identities</div></div>
+      <div class="atp-week-pip upcoming">W9<div class="atp-tooltip">General Solutions</div></div>
+      <div class="atp-week-pip upcoming">W10<div class="atp-tooltip">Analytical Geometry</div></div>
+      <div class="atp-week-pip upcoming">W11<div class="atp-tooltip">Analytical Geometry</div></div>
+    </div>
+  </div>
+
+  <!-- Grade 10 ATP -->
+  <div class="atp-bar-wrap reveal">
+    <div class="atp-header">
+      <div class="atp-grade-label">Grade 10 — Term 1</div>
+      <div class="atp-pct">24%</div>
+    </div>
+    <div class="atp-bar"><div class="atp-fill" style="width:24%"></div></div>
+    <div class="atp-labels"><span>14 Jan</span><span>27 Mar</span></div>
+    <div class="atp-weeks">
+      <div class="atp-week-pip done">W1<div class="atp-tooltip">Algebraic Expressions</div></div>
+      <div class="atp-week-pip done">W2<div class="atp-tooltip">Factorisation</div></div>
+      <div class="atp-week-pip current">W3<div class="atp-tooltip">Surds ◀ Now</div></div>
+      <div class="atp-week-pip upcoming">W4<div class="atp-tooltip">Exponents</div></div>
+      <div class="atp-week-pip upcoming">W5<div class="atp-tooltip">Equations</div></div>
+      <div class="atp-week-pip upcoming">W6<div class="atp-tooltip">Simultaneous Equations</div></div>
+      <div class="atp-week-pip upcoming">W7<div class="atp-tooltip">Inequalities</div></div>
+      <div class="atp-week-pip upcoming">W8<div class="atp-tooltip">Trigonometry</div></div>
+      <div class="atp-week-pip upcoming">W9<div class="atp-tooltip">Trig Reciprocals</div></div>
+      <div class="atp-week-pip upcoming">W10<div class="atp-tooltip">Special Angles</div></div>
+      <div class="atp-week-pip upcoming">W11<div class="atp-tooltip">Number Patterns</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div>
+    <div class="section-label reveal">Get In Touch</div>
+    <h2 class="section-title reveal">Questions?<br><em>Ask Away.</em></h2>
+    <p class="reveal" style="color:var(--muted);font-size:15px;line-height:1.7;max-width:400px;margin-bottom:40px">
+      Don't wait until the test to ask for help. I am committed to making sure every learner has the support they need to succeed. Send a question and I'll get back to you on school days.
+    </p>
+
+    <div class="contact-info reveal">
+      <div class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">nevermathibeng@gmail.com</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏫</div>
+        <div>
+          <div class="contact-label">District</div>
+          <div class="contact-value">Tshwane West · Gauteng Province</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-label">Availability</div>
+          <div class="contact-value">Monday – Friday · 08:00 – 14:30</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📐</div>
+        <div>
+          <div class="contact-label">Subjects</div>
+          <div class="contact-value">Mathematics · Grades 8 to 12 · CAPS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form-wrap reveal">
+    <div class="contact-form-title">Ask Mr. Mathibeng a Question</div>
+    <div class="form-group">
+      <label class="form-label">Your Name</label>
+      <input class="form-input" type="text" placeholder="e.g. Amara Dlamini">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Grade & Group</label>
+      <select class="form-input">
+        <option>Grade 8</option>
+        <option>Grade 9</option>
+        <option>Grade 10</option>
+        <option>Grade 11 — Key 1</option>
+        <option>Grade 11 — Key 5</option>
+        <option>Grade 11 — Key 6</option>
+        <option>Grade 12 — Informals</option>
+        <option>Grade 12 — Formals</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Your Question</label>
+      <textarea class="form-input" placeholder="e.g. I don't understand how to complete the square. Can you explain it again?"></textarea>
+    </div>
+    <button class="form-btn" onclick="handleFormSubmit(this)">Send Question →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand"><strong>Mr. Mathibeng</strong> · Mathematics 2026</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#grades">Grades</a></li>
+    <li><a href="#assessments">Assessments</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">Gauteng Province · Tshwane West · CAPS 2026</div>
+</footer>
+
+<script>
+// Ticker
+const tickerItems = [
+  'Grade 12 Assignment due 30 Apr — Informals & Formals',
+  'Grade 11 — Currently: Quadratic Equations (Week 3)',
+  'Grade 10 — Currently: Surds & Algebraic Expressions (Week 3)',
+  'Next assessment: Assignment — All Grades — Apr/May 2026',
+  'June Exams: School closes 26 June 2026',
+  'Available: Mon–Fri · 08:00–14:30 · nevermathibeng@gmail.com',
+  'Grade 12 Test 1 results: now available on marksheet',
+  'Reminder: Formula sheets and past papers in Resources',
+  'CAPS Curriculum · Grades 8–12 · Gauteng · Tshwane West District',
+];
+
+const ticker = document.getElementById('ticker-inner');
+const doubled = [...tickerItems, ...tickerItems];
+ticker.innerHTML = doubled.map(t => `<span class="ticker-item">${t}</span>`).join('');
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), 0);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+reveals.forEach(el => observer.observe(el));
+
+// Stagger siblings
+document.querySelectorAll('.grades-grid, .resources-grid, .atp-weeks').forEach(grid => {
+  grid.querySelectorAll('.reveal, .atp-week-pip').forEach((child, i) => {
+    child.style.transitionDelay = (i * 0.07) + 's';
+  });
+});
+
+// Form submit
+function handleFormSubmit(btn) {
+  btn.textContent = '✓ Question Sent!';
+  btn.style.background = '#1a3d2b';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = 'Send Question →';
+    btn.style.background = '';
+    btn.disabled = false;
+  }, 3000);
+}
+
+// Smooth nav active state
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('section[id], .hero');
+  const links = document.querySelectorAll('.nav-links a');
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  links.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--green)' : '';
+  });
+});
+</script>
+</body>
+</html>
