@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 12 Maths — SBA Tracker</title>
+<style>
+  :root{
+    --green-950:#07241a;
+    --green-900:#0B3D2E;
+    --green-800:#124a38;
+    --green-700:#1a5c46;
+    --gold:#D4AF37;
+    --gold-soft:#e8cd7a;
+    --paper:#f7f5ef;
+    --ink:#0e1a15;
+    --ink-soft:#4b5850;
+    --line:#dcd6c4;
+    --radius:2px;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:inherit}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100%;
+    display:flex;
+    flex-direction:column;
+  }
+  .band{
+    background:var(--green-900);
+    background-image:
+      linear-gradient(180deg, var(--green-950), var(--green-900) 55%, var(--green-800));
+    color:#ece7d8;
+    padding:2.6rem 1.5rem 2.1rem;
+    text-align:left;
+    position:relative;
+    border-bottom:3px solid var(--gold);
+  }
+  .band-inner{
+    max-width:640px;
+    margin:0 auto;
+  }
+  .eyebrow-line{
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:.72rem;
+    letter-spacing:.04em;
+    color:var(--gold-soft);
+    margin-bottom:.9rem;
+  }
+  .eyebrow-line svg{flex:none}
+  h1{
+    font-size:clamp(1.5rem,4.6vw,2.15rem);
+    line-height:1.15;
+    margin:0 0 .35rem;
+    font-weight:600;
+    letter-spacing:.005em;
+  }
+  .sub{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:.92rem;
+    color:#c9c2a8;
+    max-width:46ch;
+    line-height:1.5;
+    margin:0;
+  }
+
+  main{
+    flex:1;
+    max-width:640px;
+    width:100%;
+    margin:0 auto;
+    padding:1.8rem 1.5rem 4rem;
+  }
+
+  .lookup{
+    display:flex;
+    gap:.6rem;
+    margin-bottom:.6rem;
+  }
+  #code{
+    flex:1;
+    min-width:0;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:1.05rem;
+    letter-spacing:.02em;
+    padding:.85rem .9rem;
+    border:1.5px solid var(--green-900);
+    border-radius:var(--radius);
+    background:#fff;
+    color:var(--ink);
+  }
+  #code:focus{
+    outline:none;
+    border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(212,175,55,.25);
+  }
+  button#go{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-weight:600;
+    font-size:.92rem;
+    letter-spacing:.02em;
+    background:var(--green-900);
+    color:var(--gold-soft);
+    border:1.5px solid var(--green-900);
+    border-radius:var(--radius);
+    padding:.85rem 1.3rem;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  button#go:hover{background:var(--green-700)}
+  button#go:active{background:var(--green-950)}
+
+  .hint{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:.78rem;
+    color:var(--ink-soft);
+    margin:0 0 2rem;
+  }
+
+  #msg{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:.9rem;
+    color:#8a2c1f;
+    margin:0 0 1.2rem;
+    display:none;
+  }
+  #msg.show{display:block}
+
+  #result{display:none}
+  #result.show{display:block}
+
+  .result-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:2px solid var(--green-900);
+    padding-bottom:.6rem;
+    margin-bottom:1.4rem;
+    gap:1rem;
+  }
+  .result-head .code-tag{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:.78rem;
+    color:var(--ink-soft);
+  }
+  .result-head .sba-figure{
+    text-align:right;
+  }
+  .sba-figure .num{
+    font-size:1.9rem;
+    font-weight:600;
+    color:var(--green-900);
+    line-height:1;
+  }
+  .sba-figure .cap{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:.7rem;
+    color:var(--ink-soft);
+    letter-spacing:.02em;
+  }
+
+  section.block{margin-bottom:1.9rem}
+  section.block h2{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.03em;
+    color:var(--green-900);
+    margin:0 0 .7rem;
+    padding-left:.6rem;
+    border-left:3px solid var(--gold);
+  }
+
+  table.marks{
+    width:100%;
+    border-collapse:collapse;
+  }
+  table.marks tr{border-bottom:1px solid var(--line)}
+  table.marks tr:last-child{border-bottom:none}
+  table.marks td{
+    padding:.55rem .1rem;
+    font-size:.95rem;
+    vertical-align:baseline;
+  }
+  table.marks td.label{
+    color:var(--ink-soft);
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:.85rem;
+  }
+  table.marks td.raw{
+    text-align:right;
+    color:var(--ink-soft);
+    font-size:.85rem;
+    padding-right:.7rem;
+    white-space:nowrap;
+  }
+  table.marks td.pct{
+    text-align:right;
+    font-weight:600;
+    color:var(--ink);
+    white-space:nowrap;
+    width:4.5rem;
+  }
+
+  table.needed{
+    width:100%;
+    border-collapse:collapse;
+  }
+  table.needed td{
+    padding:.5rem .1rem;
+    font-size:.92rem;
+    border-bottom:1px solid var(--line);
+  }
+  table.needed tr:last-child td{border-bottom:none}
+  table.needed td.lvl{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    color:var(--ink-soft);
+    font-size:.82rem;
+  }
+  table.needed td.lvl b{color:var(--ink);font-size:.95rem}
+  table.needed td.amt{
+    text-align:right;
+    font-weight:600;
+    white-space:nowrap;
+  }
+  table.needed td.amt.met{color:var(--green-700)}
+  table.needed td.amt.short{color:#8a2c1f}
+
+  footer{
+    text-align:center;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:.72rem;
+    color:var(--ink-soft);
+    padding:1.5rem;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#12130f;
+      --ink:#ece7d8;
+      --ink-soft:#9b9788;
+      --line:#2c2b24;
+    }
+    :root:not([data-theme="light"]) #code{
+      background:#1a1c16;
+      color:#ece7d8;
+      border-color:var(--gold);
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="band">
+    <div class="band-inner">
+      <div class="eyebrow-line">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#D4AF37" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 10.5V16c0 1.5 2.7 3.5 6 3.5s6-2 6-3.5v-5.5" stroke="#D4AF37" stroke-width="1.6"/></svg>
+        Grade 12 Mathematics
+      </div>
+      <h1>SBA Tracker</h1>
+      <p class="sub">Enter your learner code to see your own marks. No one else's marks are shown.</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="lookup">
+      <input id="code" type="text" inputmode="numeric" placeholder="Enter your code" autocomplete="off" maxlength="12">
+      <button id="go">View marks</button>
+    </div>
+    <p class="hint">Your code is the number only you know. If you've lost it, ask Mr. Mathibeng.</p>
+
+    <p id="msg">That code wasn't found. Check the digits and try again.</p>
+
+    <div id="result">
+      <div class="result-head">
+        <div class="code-tag" id="code-tag"></div>
+        <div class="sba-figure">
+          <div class="num" id="sba-num">—</div>
+          <div class="cap">SBA mark, out of 25%</div>
+        </div>
+      </div>
+
+      <section class="block">
+        <h2>TERM MARKS</h2>
+        <table class="marks" id="term-marks"></table>
+      </section>
+
+      <section class="block">
+        <h2>WHAT YOU STILL NEED — COMBINED MARK OUT OF 300</h2>
+        <table class="needed" id="needed-table"></table>
+      </section>
+    </div>
+  </main>
+
+  <footer>Grade 12 Mathematics · Mr. Mathibeng</footer>
+
+<script>
+const DATA = {"2244": {"invRaw": 48, "invPct": 68.57142857142857, "test1Raw": 31, "test1Pct": 31, "assignRaw": 31, "assignPct": 62, "juneP1": 42, "juneP2": 43, "junePct": 28.333333333333332, "test2Raw": 12, "test2Pct": 24, "prelimP1": 45, "prelimP2": 23, "prelimPct": 22.666666666666664, "sbaMark": 37.752380952380946, "sbaOut25": 9.438095238095237, "needL2": 82, "needL3": 122, "needL4": 162, "needL5": 202, "needL6": 242, "needL7": 282}, "703": {"invRaw": 46, "invPct": 65.71428571428571, "test1Raw": 44, "test1Pct": 44, "assignRaw": 27, "assignPct": 54, "juneP1": 73, "juneP2": 76, "junePct": 49.666666666666664, "test2Raw": 24, "test2Pct": 48, "prelimP1": 57, "prelimP2": 43, "prelimPct": 33.33333333333333, "sbaMark": 47.54047619047619, "sbaOut25": 11.885119047619048, "needL2": 72, "needL3": 112, "needL4": 152, "needL5": 192, "needL6": 232, "needL7": 272}, "1945": {"invRaw": 43, "invPct": 61.42857142857143, "test1Raw": 36, "test1Pct": 36, "assignRaw": 18, "assignPct": 36, "juneP1": 62, "juneP2": 64, "junePct": 42, "test2Raw": 28, "test2Pct": 56.00000000000001, "prelimP1": 41, "prelimP2": 39, "prelimPct": 26.666666666666668, "sbaMark": 41.38095238095239, "sbaOut25": 10.345238095238097, "needL2": 79, "needL3": 119, "needL4": 159, "needL5": 199, "needL6": 239, "needL7": 279}, "8294": {"invRaw": 46, "invPct": 65.71428571428571, "test1Raw": 41, "test1Pct": 41, "assignRaw": 25, "assignPct": 50, "juneP1": 58, "juneP2": 60, "junePct": 39.33333333333333, "test2Raw": 32, "test2Pct": 64, "prelimP1": 51, "prelimP2": 32, "prelimPct": 27.666666666666668, "sbaMark": 45.923809523809524, "sbaOut25": 11.480952380952381, "needL2": 74, "needL3": 114, "needL4": 154, "needL5": 194, "needL6": 234, "needL7": 274}, "8244": {"invRaw": 54, "invPct": 77.14285714285715, "test1Raw": 31, "test1Pct": 31, "assignRaw": 10, "assignPct": 20, "juneP1": 55, "juneP2": 57, "junePct": 37.333333333333336, "test2Raw": 15, "test2Pct": 30, "prelimP1": 45, "prelimP2": 34, "prelimPct": 26.333333333333332, "sbaMark": 35.904761904761905, "sbaOut25": 8.976190476190476, "needL2": 84, "needL3": 124, "needL4": 164, "needL5": 204, "needL6": 244, "needL7": 284}, "2109": {"invRaw": 62, "invPct": 88.57142857142857, "test1Raw": 33, "test1Pct": 33, "assignRaw": 35, "assignPct": 70, "juneP1": 63, "juneP2": 65, "junePct": 42.66666666666667, "test2Raw": 22, "test2Pct": 44, "prelimP1": 71, "prelimP2": 47, "prelimPct": 39.33333333333333, "sbaMark": 51.569047619047616, "sbaOut25": 12.892261904761904, "needL2": 68, "needL3": 108, "needL4": 148, "needL5": 188, "needL6": 228, "needL7": 268}, "3609": {"invRaw": 65, "invPct": 92.85714285714286, "test1Raw": 78, "test1Pct": 78, "assignRaw": 44, "assignPct": 88, "juneP1": 140, "juneP2": 145, "junePct": 95, "test2Raw": 39, "test2Pct": 78, "prelimP1": 136, "prelimP2": 122, "prelimPct": 86, "sbaMark": 86.27857142857142, "sbaOut25": 21.569642857142856, "needL2": 34, "needL3": 74, "needL4": 114, "needL5": 154, "needL6": 194, "needL7": 234}, "905": {"invRaw": 46, "invPct": 65.71428571428571, "test1Raw": 43, "test1Pct": 43, "assignRaw": 20, "assignPct": 40, "juneP1": 67, "juneP2": 69, "junePct": 45.33333333333333, "test2Raw": 32, "test2Pct": 64, "prelimP1": 46, "prelimP2": 33, "prelimPct": 26.333333333333332, "sbaMark": 45.29047619047619, "sbaOut25": 11.322619047619048, "needL2": 75, "needL3": 115, "needL4": 155, "needL5": 195, "needL6": 235, "needL7": 275}, "1007": {"invRaw": 67, "invPct": 95.71428571428572, "test1Raw": 37, "test1Pct": 37, "assignRaw": 34, "assignPct": 68, "juneP1": 42, "juneP2": 43, "junePct": 28.333333333333332, "test2Raw": 7, "test2Pct": 14.000000000000002, "prelimP1": 47, "prelimP2": 43, "prelimPct": 30, "sbaMark": 43.95714285714286, "sbaOut25": 10.989285714285716, "needL2": 76, "needL3": 116, "needL4": 156, "needL5": 196, "needL6": 236, "needL7": 276}, "2027": {"invRaw": 68, "invPct": 97.14285714285714, "test1Raw": 61, "test1Pct": 61, "assignRaw": 38, "assignPct": 76, "juneP1": 115, "juneP2": 119, "junePct": 78, "test2Raw": 31, "test2Pct": 62, "prelimP1": 102, "prelimP2": 56, "prelimPct": 52.666666666666664, "sbaMark": 69.28809523809522, "sbaOut25": 17.322023809523806, "needL2": 51, "needL3": 91, "needL4": 131, "needL5": 171, "needL6": 211, "needL7": 251}, "2028": {"invRaw": 48, "invPct": 68.57142857142857, "test1Raw": 33, "test1Pct": 33, "assignRaw": 26, "assignPct": 52, "juneP1": 53, "juneP2": 55, "junePct": 36, "test2Raw": 25, "test2Pct": 50, "prelimP1": 57, "prelimP2": 38, "prelimPct": 31.666666666666664, "sbaMark": 43.852380952380955, "sbaOut25": 10.963095238095239, "needL2": 76, "needL3": 116, "needL4": 156, "needL5": 196, "needL6": 236, "needL7": 276}, "4729": {"invRaw": 53, "invPct": 75.71428571428571, "test1Raw": 44, "test1Pct": 44, "assignRaw": 37, "assignPct": 74, "juneP1": 81, "juneP2": 84, "junePct": 55.00000000000001, "test2Raw": 36, "test2Pct": 72, "prelimP1": 68, "prelimP2": 65, "prelimPct": 44.333333333333336, "sbaMark": 59.19047619047618, "sbaOut25": 14.797619047619046, "needL2": 61, "needL3": 101, "needL4": 141, "needL5": 181, "needL6": 221, "needL7": 261}, "4591": {"invRaw": 53, "invPct": 75.71428571428571, "test1Raw": 30, "test1Pct": 30, "assignRaw": 13, "assignPct": 26, "juneP1": 61, "juneP2": 63, "junePct": 41.333333333333336, "test2Raw": 11, "test2Pct": 22, "prelimP1": 39, "prelimP2": 37, "prelimPct": 25.333333333333336, "sbaMark": 35.59047619047619, "sbaOut25": 8.897619047619047, "needL2": 84, "needL3": 124, "needL4": 164, "needL5": 204, "needL6": 244, "needL7": 284}, "1910": {"invRaw": 43, "invPct": 61.42857142857143, "test1Raw": 39, "test1Pct": 39, "assignRaw": 31, "assignPct": 62, "juneP1": 50, "juneP2": 52, "junePct": 34, "test2Raw": 9, "test2Pct": 18, "prelimP1": 30, "prelimP2": 34, "prelimPct": 21.333333333333336, "sbaMark": 37.497619047619054, "sbaOut25": 9.374404761904763, "needL2": 83, "needL3": 123, "needL4": 163, "needL5": 203, "needL6": 243, "needL7": 283}, "2009": {"invRaw": 47, "invPct": 67.14285714285714, "test1Raw": 37, "test1Pct": 37, "assignRaw": 24, "assignPct": 48, "juneP1": 33, "juneP2": 34, "junePct": 22.333333333333332, "test2Raw": 21, "test2Pct": 42, "prelimP1": 52, "prelimP2": 21, "prelimPct": 24.333333333333336, "sbaMark": 38.554761904761904, "sbaOut25": 9.638690476190476, "needL2": 81, "needL3": 121, "needL4": 161, "needL5": 201, "needL6": 241, "needL7": 281}, "3745": {"invRaw": 43, "invPct": 61.42857142857143, "test1Raw": 33, "test1Pct": 33, "assignRaw": 31, "assignPct": 62, "juneP1": 61, "juneP2": 63, "junePct": 41.333333333333336, "test2Raw": 26, "test2Pct": 52, "prelimP1": 55, "prelimP2": 56, "prelimPct": 37, "sbaMark": 46.714285714285715, "sbaOut25": 11.678571428571429, "needL2": 73, "needL3": 113, "needL4": 153, "needL5": 193, "needL6": 233, "needL7": 273}, "2980": {"invRaw": 61, "invPct": 87.14285714285714, "test1Raw": 58, "test1Pct": 57.99999999999999, "assignRaw": 16, "assignPct": 32, "juneP1": 85, "juneP2": 88, "junePct": 57.666666666666664, "test2Raw": 34, "test2Pct": 68, "prelimP1": 89, "prelimP2": 58, "prelimPct": 49, "sbaMark": 57.67142857142857, "sbaOut25": 14.417857142857143, "needL2": 62, "needL3": 102, "needL4": 142, "needL5": 182, "needL6": 222, "needL7": 262}, "8502": {"invRaw": 68, "invPct": 97.14285714285714, "test1Raw": 64, "test1Pct": 64, "assignRaw": 46, "assignPct": 92, "juneP1": 102, "juneP2": 106, "junePct": 69.33333333333334, "test2Raw": 39, "test2Pct": 78, "prelimP1": 102, "prelimP2": 75, "prelimPct": 59, "sbaMark": 74.82142857142857, "sbaOut25": 18.705357142857142, "needL2": 45, "needL3": 85, "needL4": 125, "needL5": 165, "needL6": 205, "needL7": 245}, "1011": {"invRaw": 67, "invPct": 95.71428571428572, "test1Raw": 52, "test1Pct": 52, "assignRaw": 21, "assignPct": 42, "juneP1": 81, "juneP2": 84, "junePct": 55.00000000000001, "test2Raw": 30, "test2Pct": 60, "prelimP1": 71, "prelimP2": 44, "prelimPct": 38.333333333333336, "sbaMark": 55.29047619047619, "sbaOut25": 13.822619047619048, "needL2": 65, "needL3": 105, "needL4": 145, "needL5": 185, "needL6": 225, "needL7": 265}, "3005": {"invRaw": 61, "invPct": 87.14285714285714, "test1Raw": 53, "test1Pct": 53, "assignRaw": 27, "assignPct": 54, "juneP1": 101, "juneP2": 104, "junePct": 68.33333333333333, "test2Raw": 23, "test2Pct": 46, "prelimP1": 103, "prelimP2": 69, "prelimPct": 57.333333333333336, "sbaMark": 60.60476190476191, "sbaOut25": 15.151190476190477, "needL2": 59, "needL3": 99, "needL4": 139, "needL5": 179, "needL6": 219, "needL7": 259}, "2208": {"invRaw": 46, "invPct": 65.71428571428571, "test1Raw": 30, "test1Pct": 30, "assignRaw": 33, "assignPct": 66, "juneP1": 55, "juneP2": 26, "junePct": 27, "test2Raw": 18, "test2Pct": 36, "prelimP1": 39, "prelimP2": 44, "prelimPct": 27.666666666666668, "sbaMark": 40.62380952380952, "sbaOut25": 10.15595238095238, "needL2": 79, "needL3": 119, "needL4": 159, "needL5": 199, "needL6": 239, "needL7": 279}, "1822": {"invRaw": 60, "invPct": 85.71428571428571, "test1Raw": 23, "test1Pct": 23, "assignRaw": 23, "assignPct": 46, "juneP1": 22, "juneP2": 23, "junePct": 15, "test2Raw": 23, "test2Pct": 46, "prelimP1": 42, "prelimP2": 38, "prelimPct": 26.666666666666668, "sbaMark": 39.023809523809526, "sbaOut25": 9.755952380952381, "needL2": 81, "needL3": 121, "needL4": 161, "needL5": 201, "needL6": 241, "needL7": 281}, "2780": {"invRaw": 17, "invPct": 24.285714285714285, "test1Raw": 20, "test1Pct": 20, "assignRaw": 6, "assignPct": 12, "juneP1": 19, "juneP2": 20, "junePct": 13, "test2Raw": 8, "test2Pct": 16, "prelimP1": 16, "prelimP2": 15, "prelimPct": 10.333333333333334, "sbaMark": 15.376190476190477, "sbaOut25": 3.844047619047619, "needL2": 105, "needL3": 145, "needL4": 185, "needL5": 225, "needL6": 265, "needL7": "Not attainable"}, "2703": {"invRaw": 36, "invPct": 51.42857142857142, "test1Raw": 15, "test1Pct": 15, "assignRaw": 11, "assignPct": 22, "juneP1": 25, "juneP2": 26, "junePct": 17, "test2Raw": 11, "test2Pct": 22, "prelimP1": 30, "prelimP2": 24, "prelimPct": 18, "sbaMark": 23.614285714285714, "sbaOut25": 5.9035714285714285, "needL2": 96, "needL3": 136, "needL4": 176, "needL5": 216, "needL6": 256, "needL7": 296}, "2026": {"invRaw": 39, "invPct": 55.714285714285715, "test1Raw": 7, "test1Pct": 7.000000000000001, "assignRaw": 23, "assignPct": 46, "juneP1": 18, "juneP2": 19, "junePct": 12.333333333333334, "test2Raw": 14, "test2Pct": 28.000000000000004, "prelimP1": 19, "prelimP2": 23, "prelimPct": 14.000000000000002, "sbaMark": 25.857142857142858, "sbaOut25": 6.464285714285714, "needL2": 94, "needL3": 134, "needL4": 174, "needL5": 214, "needL6": 254, "needL7": 294}, "215": {"invRaw": 69, "invPct": 98.57142857142858, "test1Raw": 94, "test1Pct": 94, "assignRaw": 46, "assignPct": 92, "juneP1": 140, "juneP2": 145, "junePct": 95, "test2Raw": 41, "test2Pct": 82, "prelimP1": 145, "prelimP2": 121, "prelimPct": 88.66666666666667, "sbaMark": 91.40238095238095, "sbaOut25": 22.850595238095238, "needL2": 29, "needL3": 69, "needL4": 109, "needL5": 149, "needL6": 189, "needL7": 229}, "1663": {"invRaw": 54, "invPct": 77.14285714285715, "test1Raw": 41, "test1Pct": 41, "assignRaw": 22, "assignPct": 44, "juneP1": 67, "juneP2": 69, "junePct": 45.33333333333333, "test2Raw": 9, "test2Pct": 18, "prelimP1": 49, "prelimP2": 29, "prelimPct": 26, "sbaMark": 40.32142857142858, "sbaOut25": 10.080357142857144, "needL2": 80, "needL3": 120, "needL4": 160, "needL5": 200, "needL6": 240, "needL7": 280}, "1516": {"invRaw": 45, "invPct": 64.28571428571429, "test1Raw": 51, "test1Pct": 51, "assignRaw": 27, "assignPct": 54, "juneP1": 73, "juneP2": 76, "junePct": 49.666666666666664, "test2Raw": 20, "test2Pct": 40, "prelimP1": 70, "prelimP2": 38, "prelimPct": 36, "sbaMark": 47.842857142857135, "sbaOut25": 11.960714285714284, "needL2": 72, "needL3": 112, "needL4": 152, "needL5": 192, "needL6": 232, "needL7": 272}, "814": {"invRaw": 54, "invPct": 77.14285714285715, "test1Raw": 48, "test1Pct": 48, "assignRaw": 26, "assignPct": 52, "juneP1": 67, "juneP2": 69, "junePct": 45.33333333333333, "test2Raw": 12, "test2Pct": 24, "prelimP1": 50, "prelimP2": 60, "prelimPct": 36.666666666666664, "sbaMark": 46.13809523809524, "sbaOut25": 11.53452380952381, "needL2": 74, "needL3": 114, "needL4": 154, "needL5": 194, "needL6": 234, "needL7": 274}, "2020": {"invRaw": 63, "invPct": 90, "test1Raw": 23, "test1Pct": 23, "assignRaw": 26, "assignPct": 52, "juneP1": 44, "juneP2": 46, "junePct": 30, "test2Raw": 20, "test2Pct": 40, "prelimP1": 27, "prelimP2": 34, "prelimPct": 20.333333333333332, "sbaMark": 40.333333333333336, "sbaOut25": 10.083333333333334, "needL2": 80, "needL3": 120, "needL4": 160, "needL5": 200, "needL6": 240, "needL7": 280}, "6767": {"invRaw": 60, "invPct": 85.71428571428571, "test1Raw": 38, "test1Pct": 38, "assignRaw": 23, "assignPct": 46, "juneP1": 66, "juneP2": 68, "junePct": 44.666666666666664, "test2Raw": 15, "test2Pct": 30, "prelimP1": 65, "prelimP2": 31, "prelimPct": 32, "sbaMark": 44.65714285714285, "sbaOut25": 11.164285714285713, "needL2": 75, "needL3": 115, "needL4": 155, "needL5": 195, "needL6": 235, "needL7": 275}, "6768": {"invRaw": 56, "invPct": 80, "test1Raw": 60, "test1Pct": 60, "assignRaw": 38, "assignPct": 76, "juneP1": 119, "juneP2": 123, "junePct": 80.66666666666666, "test2Raw": 30, "test2Pct": 60, "prelimP1": 97, "prelimP2": 70, "prelimPct": 55.666666666666664, "sbaMark": 67.41666666666666, "sbaOut25": 16.854166666666664, "needL2": 53, "needL3": 93, "needL4": 133, "needL5": 173, "needL6": 213, "needL7": 253}, "6798": {"invRaw": 46, "invPct": 65.71428571428571, "test1Raw": 40, "test1Pct": 40, "assignRaw": 21, "assignPct": 42, "juneP1": 57, "juneP2": 59, "junePct": 38.666666666666664, "test2Raw": 29, "test2Pct": 57.99999999999999, "prelimP1": 50, "prelimP2": 34, "prelimPct": 28.000000000000004, "sbaMark": 43.657142857142865, "sbaOut25": 10.914285714285716, "needL2": 76, "needL3": 116, "needL4": 156, "needL5": 196, "needL6": 236, "needL7": 276}, "5643": {"invRaw": 61, "invPct": 87.14285714285714, "test1Raw": 38, "test1Pct": 38, "assignRaw": 28, "assignPct": 56.00000000000001, "juneP1": 71, "juneP2": 73, "junePct": 48, "test2Raw": 19, "test2Pct": 38, "prelimP1": 63, "prelimP2": 54, "prelimPct": 39, "sbaMark": 49.82142857142857, "sbaOut25": 12.455357142857142, "needL2": 70, "needL3": 110, "needL4": 150, "needL5": 190, "needL6": 230, "needL7": 270}, "7117": {"invRaw": 70, "invPct": 100, "test1Raw": 90, "test1Pct": 90, "assignRaw": 45, "assignPct": 90, "juneP1": 121, "juneP2": 125, "junePct": 82, "test2Raw": 40, "test2Pct": 80, "prelimP1": 127, "prelimP2": 68, "prelimPct": 65, "sbaMark": 82.55, "sbaOut25": 20.6375, "needL2": 37, "needL3": 77, "needL4": 117, "needL5": 157, "needL6": 197, "needL7": 237}, "520": {"invRaw": 69, "invPct": 98.57142857142858, "test1Raw": 73, "test1Pct": 73, "assignRaw": 44, "assignPct": 88, "juneP1": 102, "juneP2": 106, "junePct": 69.33333333333334, "test2Raw": 36, "test2Pct": 72, "prelimP1": 108, "prelimP2": 87, "prelimPct": 65, "sbaMark": 76.38571428571429, "sbaOut25": 19.09642857142857, "needL2": 44, "needL3": 84, "needL4": 124, "needL5": 164, "needL6": 204, "needL7": 244}, "2604": {"invRaw": 49, "invPct": 70, "test1Raw": 34, "test1Pct": 34, "assignRaw": 28, "assignPct": 56.00000000000001, "juneP1": 59, "juneP2": 61, "junePct": 40, "test2Raw": 22, "test2Pct": 44, "prelimP1": 52, "prelimP2": 42, "prelimPct": 31.333333333333336, "sbaMark": 44.43333333333333, "sbaOut25": 11.108333333333333, "needL2": 76, "needL3": 116, "needL4": 156, "needL5": 196, "needL6": 236, "needL7": 276}, "2200": {"invRaw": 59, "invPct": 84.28571428571429, "test1Raw": 22, "test1Pct": 22, "assignRaw": 21, "assignPct": 42, "juneP1": 35, "juneP2": 36, "junePct": 23.666666666666668, "test2Raw": 21, "test2Pct": 42, "prelimP1": 37, "prelimP2": 31, "prelimPct": 22.666666666666664, "sbaMark": 37.75952380952381, "sbaOut25": 9.439880952380953, "needL2": 82, "needL3": 122, "needL4": 162, "needL5": 202, "needL6": 242, "needL7": 282}, "4062": {"invRaw": 64, "invPct": 91.42857142857143, "test1Raw": 43, "test1Pct": 43, "assignRaw": 38, "assignPct": 76, "juneP1": 61, "juneP2": 63, "junePct": 41.333333333333336, "test2Raw": 20, "test2Pct": 40, "prelimP1": 56, "prelimP2": 43, "prelimPct": 33, "sbaMark": 52.01428571428571, "sbaOut25": 13.003571428571428, "needL2": 68, "needL3": 108, "needL4": 148, "needL5": 188, "needL6": 228, "needL7": 268}, "815": {"invRaw": 55, "invPct": 78.57142857142857, "test1Raw": 20, "test1Pct": 20, "assignRaw": 28, "assignPct": 56.00000000000001, "juneP1": 36, "juneP2": 37, "junePct": 24.333333333333336, "test2Raw": 14, "test2Pct": 28.000000000000004, "prelimP1": 19, "prelimP2": 13, "prelimPct": 10.666666666666668, "sbaMark": 33.70238095238095, "sbaOut25": 8.425595238095237, "needL2": 86, "needL3": 126, "needL4": 166, "needL5": 206, "needL6": 246, "needL7": 286}, "1706": {"invRaw": 65, "invPct": 92.85714285714286, "test1Raw": 26, "test1Pct": 26, "assignRaw": 26, "assignPct": 52, "juneP1": 35, "juneP2": 36, "junePct": 23.666666666666668, "test2Raw": 26, "test2Pct": 52, "prelimP1": 50, "prelimP2": 31, "prelimPct": 27, "sbaMark": 43.72857142857143, "sbaOut25": 10.932142857142857, "needL2": 76, "needL3": 116, "needL4": 156, "needL5": 196, "needL6": 236, "needL7": 276}, "1234": {"invRaw": 69, "invPct": 98.57142857142858, "test1Raw": 33, "test1Pct": 33, "assignRaw": 31, "assignPct": 62, "juneP1": 55, "juneP2": 57, "junePct": 37.333333333333336, "test2Raw": 23, "test2Pct": 46, "prelimP1": 47, "prelimP2": 32, "prelimPct": 26.333333333333332, "sbaMark": 48.11904761904761, "sbaOut25": 12.029761904761903, "needL2": 72, "needL3": 112, "needL4": 152, "needL5": 192, "needL6": 232, "needL7": 272}, "8753": {"invRaw": 63, "invPct": 90, "test1Raw": 31, "test1Pct": 31, "assignRaw": 18, "assignPct": 36, "juneP1": 41, "juneP2": 42, "junePct": 27.666666666666668, "test2Raw": 17, "test2Pct": 34, "prelimP1": 48, "prelimP2": 17, "prelimPct": 21.666666666666668, "sbaMark": 38.21666666666667, "sbaOut25": 9.554166666666667, "needL2": 82, "needL3": 122, "needL4": 162, "needL5": 202, "needL6": 242, "needL7": 282}, "1956": {"invRaw": 54, "invPct": 77.14285714285715, "test1Raw": 41, "test1Pct": 41, "assignRaw": 17, "assignPct": 34, "juneP1": 70, "juneP2": 72, "junePct": 47.333333333333336, "test2Raw": 33, "test2Pct": 66, "prelimP1": 65, "prelimP2": 40, "prelimPct": 35, "sbaMark": 48.57142857142857, "sbaOut25": 12.142857142857142, "needL2": 71, "needL3": 111, "needL4": 151, "needL5": 191, "needL6": 231, "needL7": 271}, "2188": {"invRaw": 60, "invPct": 85.71428571428571, "test1Raw": 56, "test1Pct": 56.00000000000001, "assignRaw": 28, "assignPct": 56.00000000000001, "juneP1": 59, "juneP2": 61, "junePct": 40, "test2Raw": 22, "test2Pct": 44, "prelimP1": 63, "prelimP2": 43, "prelimPct": 35.333333333333336, "sbaMark": 51.090476190476195, "sbaOut25": 12.772619047619049, "needL2": 69, "needL3": 109, "needL4": 149, "needL5": 189, "needL6": 229, "needL7": 269}, "1961": {"invRaw": 70, "invPct": 100, "test1Raw": 95, "test1Pct": 95, "assignRaw": 49, "assignPct": 98, "juneP1": 129, "juneP2": 133, "junePct": 87.33333333333333, "test2Raw": 40, "test2Pct": 80, "prelimP1": 145, "prelimP2": 142, "prelimPct": 95.66666666666667, "sbaMark": 92.96666666666668, "sbaOut25": 23.24166666666667, "needL2": 27, "needL3": 67, "needL4": 107, "needL5": 147, "needL6": 187, "needL7": 227}, "1308": {"invRaw": 54, "invPct": 77.14285714285715, "test1Raw": 20, "test1Pct": 20, "assignRaw": 18, "assignPct": 36, "juneP1": 30, "juneP2": 31, "junePct": 20.333333333333332, "test2Raw": 14, "test2Pct": 28.000000000000004, "prelimP1": 29, "prelimP2": 21, "prelimPct": 16.666666666666664, "sbaMark": 31.38809523809524, "sbaOut25": 7.847023809523809, "needL2": 89, "needL3": 129, "needL4": 169, "needL5": 209, "needL6": 249, "needL7": 289}, "1612": {"invRaw": 45, "invPct": 64.28571428571429, "test1Raw": 16, "test1Pct": 16, "assignRaw": 8, "assignPct": 16, "juneP1": 32, "juneP2": 33, "junePct": 21.666666666666668, "test2Raw": 17, "test2Pct": 34, "prelimP1": 17, "prelimP2": 18, "prelimPct": 11.666666666666666, "sbaMark": 25.70952380952381, "sbaOut25": 6.427380952380952, "needL2": 94, "needL3": 134, "needL4": 174, "needL5": 214, "needL6": 254, "needL7": 294}, "2159": {"invRaw": 41, "invPct": 58.57142857142858, "test1Raw": 21, "test1Pct": 21, "assignRaw": 23, "assignPct": 46, "juneP1": 51, "juneP2": 53, "junePct": 34.66666666666667, "test2Raw": 19, "test2Pct": 38, "prelimP1": 45, "prelimP2": 33, "prelimPct": 26, "sbaMark": 36.23571428571429, "sbaOut25": 9.058928571428572, "needL2": 84, "needL3": 124, "needL4": 164, "needL5": 204, "needL6": 244, "needL7": 284}, "2609": {"invRaw": 66, "invPct": 94.28571428571428, "test1Raw": 35, "test1Pct": 35, "assignRaw": 27, "assignPct": 54, "juneP1": 84, "juneP2": 87, "junePct": 56.99999999999999, "test2Raw": 30, "test2Pct": 60, "prelimP1": 81, "prelimP2": 64, "prelimPct": 48.333333333333336, "sbaMark": 57.12619047619048, "sbaOut25": 14.281547619047618, "needL2": 63, "needL3": 103, "needL4": 143, "needL5": 183, "needL6": 223, "needL7": 263}, "2004": {"invRaw": 59, "invPct": 84.28571428571429, "test1Raw": 42, "test1Pct": 42, "assignRaw": 32, "assignPct": 64, "juneP1": 50, "juneP2": 52, "junePct": 34, "test2Raw": 27, "test2Pct": 54, "prelimP1": 53, "prelimP2": 38, "prelimPct": 30.333333333333336, "sbaMark": 49.326190476190476, "sbaOut25": 12.331547619047619, "needL2": 71, "needL3": 111, "needL4": 151, "needL5": 191, "needL6": 231, "needL7": 271}, "8000": {"invRaw": 47, "invPct": 67.14285714285714, "test1Raw": 37, "test1Pct": 37, "assignRaw": 21, "assignPct": 42, "juneP1": 59, "juneP2": 61, "junePct": 40, "test2Raw": 22, "test2Pct": 44, "prelimP1": 51, "prelimP2": 26, "prelimPct": 25.666666666666664, "sbaMark": 40.93809523809524, "sbaOut25": 10.23452380952381, "needL2": 79, "needL3": 119, "needL4": 159, "needL5": 199, "needL6": 239, "needL7": 279}, "2709": {"invRaw": 62, "invPct": 88.57142857142857, "test1Raw": 57, "test1Pct": 56.99999999999999, "assignRaw": 20, "assignPct": 40, "juneP1": 55, "juneP2": 57, "junePct": 37.333333333333336, "test2Raw": 19, "test2Pct": 38, "prelimP1": 47, "prelimP2": 38, "prelimPct": 28.333333333333332, "sbaMark": 46.219047619047615, "sbaOut25": 11.554761904761904, "needL2": 74, "needL3": 114, "needL4": 154, "needL5": 194, "needL6": 234, "needL7": 274}, "2198": {"invRaw": 38, "invPct": 54.285714285714285, "test1Raw": 32, "test1Pct": 32, "assignRaw": 29, "assignPct": 57.99999999999999, "juneP1": 41, "juneP2": 42, "junePct": 27.666666666666668, "test2Raw": 20, "test2Pct": 40, "prelimP1": 51, "prelimP2": 23, "prelimPct": 24.666666666666668, "sbaMark": 37.95952380952381, "sbaOut25": 9.489880952380952, "needL2": 82, "needL3": 122, "needL4": 162, "needL5": 202, "needL6": 242, "needL7": 282}, "7010": {"invRaw": 69, "invPct": 98.57142857142858, "test1Raw": 55, "test1Pct": 55.00000000000001, "assignRaw": 49, "assignPct": 98, "juneP1": 106, "juneP2": 110, "junePct": 72, "test2Raw": 36, "test2Pct": 72, "prelimP1": 95, "prelimP2": 73, "prelimPct": 56.00000000000001, "sbaMark": 73.33571428571429, "sbaOut25": 18.333928571428572, "needL2": 47, "needL3": 87, "needL4": 127, "needL5": 167, "needL6": 207, "needL7": 247}, "3055": {"invRaw": 52, "invPct": 74.28571428571429, "test1Raw": 36, "test1Pct": 36, "assignRaw": 15, "assignPct": 30, "juneP1": 50, "juneP2": 52, "junePct": 34, "test2Raw": 16, "test2Pct": 32, "prelimP1": 46, "prelimP2": 24, "prelimPct": 23.333333333333332, "sbaMark": 36.77619047619048, "sbaOut25": 9.19404761904762, "needL2": 83, "needL3": 123, "needL4": 163, "needL5": 203, "needL6": 243, "needL7": 283}, "2021": {"invRaw": 40, "invPct": 57.14285714285714, "test1Raw": 57, "test1Pct": 56.99999999999999, "assignRaw": 25, "assignPct": 50, "juneP1": 95, "juneP2": 98, "junePct": 64.33333333333333, "test2Raw": 22, "test2Pct": 44, "prelimP1": 100, "prelimP2": 64, "prelimPct": 54.666666666666664, "sbaMark": 54.53809523809523, "sbaOut25": 13.634523809523808, "needL2": 65, "needL3": 105, "needL4": 145, "needL5": 185, "needL6": 225, "needL7": 265}, "2884": {"invRaw": 53, "invPct": 75.71428571428571, "test1Raw": 30, "test1Pct": 30, "assignRaw": 19, "assignPct": 38, "juneP1": 46, "juneP2": 48, "junePct": 31.333333333333336, "test2Raw": 18, "test2Pct": 36, "prelimP1": 28, "prelimP2": 26, "prelimPct": 18, "sbaMark": 36.15714285714285, "sbaOut25": 9.039285714285713, "needL2": 84, "needL3": 124, "needL4": 164, "needL5": 204, "needL6": 244, "needL7": 284}, "3696": {"invRaw": 64, "invPct": 91.42857142857143, "test1Raw": 10, "test1Pct": 10, "assignRaw": 16, "assignPct": 32, "juneP1": 26, "juneP2": 27, "junePct": 17.666666666666668, "test2Raw": 9, "test2Pct": 18, "prelimP1": 45, "prelimP2": 27, "prelimPct": 24, "sbaMark": 31.364285714285714, "sbaOut25": 7.841071428571428, "needL2": 89, "needL3": 129, "needL4": 169, "needL5": 209, "needL6": 249, "needL7": 289}, "122": {"invRaw": 66, "invPct": 94.28571428571428, "test1Raw": 38, "test1Pct": 38, "assignRaw": 28, "assignPct": 56.00000000000001, "juneP1": 52, "juneP2": 54, "junePct": 35.333333333333336, "test2Raw": 20, "test2Pct": 40, "prelimP1": 49, "prelimP2": 44, "prelimPct": 31, "sbaMark": 47.29285714285714, "sbaOut25": 11.823214285714284, "needL2": 73, "needL3": 113, "needL4": 153, "needL5": 193, "needL6": 233, "needL7": 273}, "2784": {"invRaw": 61, "invPct": 87.14285714285714, "test1Raw": 58, "test1Pct": 57.99999999999999, "assignRaw": 39, "assignPct": 78, "juneP1": 74, "juneP2": 77, "junePct": 50.33333333333333, "test2Raw": 35, "test2Pct": 70, "prelimP1": 78, "prelimP2": 76, "prelimPct": 51.33333333333333, "sbaMark": 64.3547619047619, "sbaOut25": 16.088690476190475, "needL2": 56, "needL3": 96, "needL4": 136, "needL5": 176, "needL6": 216, "needL7": 256}, "117": {"invRaw": 50, "invPct": 71.42857142857143, "test1Raw": 39, "test1Pct": 39, "assignRaw": 14, "assignPct": 28.000000000000004, "juneP1": 37, "juneP2": 38, "junePct": 25, "test2Raw": 16, "test2Pct": 32, "prelimP1": 45, "prelimP2": 26, "prelimPct": 23.666666666666668, "sbaMark": 35.23095238095239, "sbaOut25": 8.807738095238097, "needL2": 85, "needL3": 125, "needL4": 165, "needL5": 205, "needL6": 245, "needL7": 285}, "8472": {"invRaw": 56, "invPct": 80, "test1Raw": 50, "test1Pct": 50, "assignRaw": 39, "assignPct": 78, "juneP1": 78, "juneP2": 81, "junePct": 53, "test2Raw": 17, "test2Pct": 34, "prelimP1": 63, "prelimP2": 43, "prelimPct": 35.333333333333336, "sbaMark": 53.08333333333333, "sbaOut25": 13.270833333333332, "needL2": 67, "needL3": 107, "needL4": 147, "needL5": 187, "needL6": 227, "needL7": 267}, "1422": {"invRaw": 46, "invPct": 65.71428571428571, "test1Raw": 19, "test1Pct": 19, "assignRaw": 36, "assignPct": 72, "juneP1": 34, "juneP2": 35, "junePct": 23, "test2Raw": 11, "test2Pct": 22, "prelimP1": 13, "prelimP2": 17, "prelimPct": 10, "sbaMark": 32.75714285714286, "sbaOut25": 8.189285714285715, "needL2": 87, "needL3": 127, "needL4": 167, "needL5": 207, "needL6": 247, "needL7": 287}, "1520": {"invRaw": 69, "invPct": 98.57142857142858, "test1Raw": 42, "test1Pct": 42, "assignRaw": 38, "assignPct": 76, "juneP1": 73, "juneP2": 76, "junePct": 49.666666666666664, "test2Raw": 27, "test2Pct": 54, "prelimP1": 55, "prelimP2": 40, "prelimPct": 31.666666666666664, "sbaMark": 55.952380952380956, "sbaOut25": 13.988095238095239, "needL2": 64, "needL3": 104, "needL4": 144, "needL5": 184, "needL6": 224, "needL7": 264}, "2323": {"invRaw": 67, "invPct": 95.71428571428572, "test1Raw": 33, "test1Pct": 33, "assignRaw": 24, "assignPct": 48, "juneP1": 23, "juneP2": 24, "junePct": 15.666666666666668, "test2Raw": 15, "test2Pct": 30, "prelimP1": 36, "prelimP2": 38, "prelimPct": 24.666666666666668, "sbaMark": 39.523809523809526, "sbaOut25": 9.880952380952381, "needL2": 80, "needL3": 120, "needL4": 160, "needL5": 200, "needL6": 240, "needL7": 280}, "2435": {"invRaw": 48, "invPct": 68.57142857142857, "test1Raw": 50, "test1Pct": 50, "assignRaw": 43, "assignPct": 86, "juneP1": 75, "juneP2": 78, "junePct": 51, "test2Raw": 25, "test2Pct": 50, "prelimP1": 80, "prelimP2": 68, "prelimPct": 49.333333333333336, "sbaMark": 58.16904761904762, "sbaOut25": 14.542261904761904, "needL2": 62, "needL3": 102, "needL4": 142, "needL5": 182, "needL6": 222, "needL7": 262}};
+
+function fmtPct(v){
+  if (v === null || v === undefined) return '—';
+  return Math.round(v) + '%';
+}
+function fmtNum(v, dp){
+  if (v === null || v === undefined) return '—';
+  return dp ? v.toFixed(dp) : Math.round(v);
+}
+
+function row(label, raw, pct){
+  return `<tr><td class="label">${label}</td><td class="raw">${raw}</td><td class="pct">${fmtPct(pct)}</td></tr>`;
+}
+
+function render(rec, code){
+  document.getElementById('code-tag').textContent = 'Code ' + code;
+  document.getElementById('sba-num').textContent = fmtNum(rec.sbaOut25, 1) + '%';
+
+  const marksRows = [
+    row('Investigation (Term 1)', `${Math.round(rec.invRaw)}/70`, rec.invPct),
+    row('Test 1 (Term 1)', `${Math.round(rec.test1Raw)}/100`, rec.test1Pct),
+    row('Assignment (Term 2)', `${Math.round(rec.assignRaw)}/50`, rec.assignPct),
+    row('June Exam', `${Math.round(rec.juneP1)}+${Math.round(rec.juneP2)}/300`, rec.junePct),
+    row('Test 2 (Term 3)', `${Math.round(rec.test2Raw)}/50`, rec.test2Pct),
+    row('Prelim', `${Math.round(rec.prelimP1)}+${Math.round(rec.prelimP2)}/300`, rec.prelimPct),
+    row('SBA Mark', '/100', rec.sbaMark),
+  ].join('');
+  document.getElementById('term-marks').innerHTML = marksRows;
+
+  const levels = [
+    ['Level 2', '30%', rec.needL2],
+    ['Level 3', '40%', rec.needL3],
+    ['Level 4', '50%', rec.needL4],
+    ['Level 5', '60%', rec.needL5],
+    ['Level 6', '70%', rec.needL6],
+    ['Level 7', '80%', rec.needL7],
+  ];
+  document.getElementById('needed-table').innerHTML = levels.map(([name, pct, need]) => {
+    return `<tr><td class="lvl"><b>${name}</b> &nbsp;(${pct})</td><td class="amt">${Math.round(need)}/300</td></tr>`;
+  }).join('');
+
+  document.getElementById('result').classList.add('show');
+  document.getElementById('msg').classList.remove('show');
+}
+
+function lookup(){
+  const raw = document.getElementById('code').value.trim();
+  const msg = document.getElementById('msg');
+  const result = document.getElementById('result');
+  if (!raw){
+    result.classList.remove('show');
+    msg.classList.remove('show');
+    return;
+  }
+  const rec = DATA[raw];
+  if (rec){
+    render(rec, raw);
+  } else {
+    result.classList.remove('show');
+    msg.classList.add('show');
+  }
+}
+
+document.getElementById('go').addEventListener('click', lookup);
+document.getElementById('code').addEventListener('keydown', e => {
+  if (e.key === 'Enter') lookup();
+});
+</script>
+</body>
+</html>
