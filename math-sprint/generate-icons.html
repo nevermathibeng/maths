@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Icon Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; background: #f0f4f8; }
+    canvas { border: 1px solid #ccc; margin: 1rem 0; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Math Sprint Icon Generator</h1>
+  <p>Right-click each image below and choose <strong>"Save image as..."</strong>.</p>
+  <p>Save the first one as <code>icon-192.png</code> and the second as <code>icon-512.png</code> in the same folder as your other files.</p>
+
+  <h2>192 × 192</h2>
+  <canvas id="c192" width="192" height="192"></canvas>
+
+  <h2>512 × 512</h2>
+  <canvas id="c512" width="512" height="512"></canvas>
+
+  <script>
+    function drawIcon(canvas) {
+      const ctx = canvas.getContext('2d');
+      const size = canvas.width;
+
+      // Green background
+      ctx.fillStyle = '#4CAF50';
+      ctx.fillRect(0, 0, size, size);
+
+      // White plus sign
+      ctx.fillStyle = 'white';
+      const bar = size * 0.16;   // thickness
+      const len = size * 0.6;    // length
+
+      // Horizontal bar
+      ctx.fillRect((size - len) / 2, (size - bar) / 2, len, bar);
+      // Vertical bar
+      ctx.fillRect((size - bar) / 2, (size - len) / 2, bar, len);
+    }
+
+    drawIcon(document.getElementById('c192'));
+    drawIcon(document.getElementById('c512'));
+  </script>
+</body>
+</html>

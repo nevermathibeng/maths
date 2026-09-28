@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Sprint</title>
+
+  <!-- PWA bits -->
+  <meta name="theme-color" content="#4CAF50">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    #question {
+      font-size: 2rem;
+      margin: 1rem 0;
+      min-height: 3rem;
+    }
+
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 80%;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background: #4CAF50;
+      color: white;
+      margin: 0.25rem;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    #install-btn {
+      background: #2196F3;
+      display: none;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Math Sprint</h1>
+    <div id="timer">Time left: <span id="time">60</span>s</div>
+    <div id="score">Score: <span id="score-value">0</span></div>
+    <div id="question">Press "Start" to begin</div>
+    <input type="number" id="answer" placeholder="Your answer" disabled>
+    <button id="submit" disabled>Submit</button>
+    <button id="start">Start Game</button>
+    <div id="high-score">High Score: <span id="high-score-value">0</span></div>
+    <button id="install-btn">📲 Install App</button>
+  </div>
+
+  <script>
+    // ---------- GAME LOGIC ----------
+    let score = 0;
+    let timeLeft = 60;
+    let timerInterval;
+    let currentAnswer = 0;
+    let highScore = localStorage.getItem('mathSprintHighScore') || 0;
+
+    document.getElementById('high-score-value').textContent = highScore;
+
+    const questionEl = document.getElementById('question');
+    const answerInput = document.getElementById('answer');
+    const submitBtn = document.getElementById('submit');
+    const startBtn = document.getElementById('start');
+    const timeEl = document.getElementById('time');
+    const scoreEl = document.getElementById('score-value');
+
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateQuestion() {
+      const num1 = randomInt(1, 10);
+      const num2 = randomInt(1, 10);
+      currentAnswer = num1 + num2;
+      questionEl.textContent = `${num1} + ${num2} = ?`;
+    }
+
+    function startGame() {
+      score = 0;
+      timeLeft = 60;
+      scoreEl.textContent = score;
+      timeEl.textContent = timeLeft;
+
+      answerInput.disabled = false;
+      submitBtn.disabled = false;
+      startBtn.disabled = true;
+      answerInput.focus();
+
+      generateQuestion();
+
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timeEl.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          endGame();
+        }
+      }, 1000);
+    }
+
+    function endGame() {
+      clearInterval(timerInterval);
+      answerInput.disabled = true;
+      submitBtn.disabled = true;
+      startBtn.disabled = false;
+      questionEl.textContent = 'Game Over! Press "Start" to play again.';
+
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('mathSprintHighScore', highScore);
+        document.getElementById('high-score-value').textContent = highScore;
+      }
+    }
+
+    function checkAnswer() {
+      const userAnswer = parseInt(answerInput.value, 10);
+      if (isNaN(userAnswer)) return;
+
+      if (userAnswer === currentAnswer) {
+        score++;
+        scoreEl.textContent = score;
+        answerInput.value = '';
+        generateQuestion();
+      } else {
+        answerInput.style.backgroundColor = '#ffcccc';
+        setTimeout(() => {
+          answerInput.style.backgroundColor = '';
+        }, 200);
+      }
+    }
+
+    startBtn.addEventListener('click', startGame);
+    submitBtn.addEventListener('click', checkAnswer);
+    answerInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        checkAnswer();
+      }
+    });
+
+    // ---------- PWA: SERVICE WORKER ----------
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker registered:', reg.scope))
+          .catch(err => console.log('Service Worker registration failed:', err));
+      });
+    }
+
+    // ---------- PWA: INSTALL BUTTON ----------
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log('Install choice:', outcome);
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    });
+
+    // Hide the install button if the app is already installed
+    window.addEventListener('appinstalled', () => {
+      installBtn.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
